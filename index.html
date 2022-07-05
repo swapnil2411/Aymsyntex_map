@@ -130,6 +130,7 @@
         });
 
         $('.statelist li').on('click', function(){
+            $(this).addClass('active').siblings().removeClass('active');
             var currstate = $(this).find('span:nth-child(1)').text();
             console.log(currstate);
             mapData.forEach(element => {
