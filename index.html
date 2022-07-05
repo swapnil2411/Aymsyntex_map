@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Map</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .inner_contact_map{
+            display: -webkit-box;
+            display: -moz-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
+            -webkit-align-items: center;
+            -webkit-box-align: center;
+            align-items: center;
+        }
+
+        .left_map_section,
+        .right_map_section{
+            flex: 0 0 50%;
+            max-width: 50%;
+        }
+
+        /* .right_map_section{
+            position: relative;
+        } */
+
+        .left_map_section{
+            background: #d11c26;
+            padding: 100px 0;
+        }
+
+        .left_map_section .statelist{
+            padding-left: 70px;
+        }
+
+        .left_map_section .statelist li{
+            color: #fff;
+            margin-bottom: 25px;
+            list-style: none;
+            cursor: pointer;
+            transition: .5s ease-in-out all;
+            position: relative;
+        }
+
+        .left_map_section .statelist li::before{
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 1px;
+            left: -80px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #fff;
+            display: block;
+            z-index: 1;
+            transition: .5s ease-in-out all;
+        }
+
+        .left_map_section .statelist li:hover::before{
+            width: 60px;
+            left: -80px;
+        }
+
+        .left_map_section .statelist li:hover{
+            margin-left: 10px;
+        }
+
+        .left_map_section .statelist li.active{
+            color: #f8d280;
+        }
+
+        .right_map_section iframe{
+            border: 0;
+            width: 70%;
+            height: 600px;
+            position: absolute;
+            left: 60%;
+            top: 65%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+    <section class="contact_map_area">
+        <div class="inner_contact_map">
+            <div class="left_map_section">
+                <ul class="statelist">
+                    <li class="active"><span>Mumbai</span><br><span>(Head Office)</span></li>
+                    <li><span>Palghar</span><br><span>(Manufacturing Plant)</span></li>
+                    <li><span>Silvassa</span><br><span>(Manufacturing Plant)</span></li>
+                    <li><span>Naroli</span><br><span>(Manufacturing Plant)</span></li>
+                    <li><span>Banglore</span><br><span>(Marketing Office)</span></li>
+                    <li><span>Surat</span><br><span>(Marketing Office)</span></li>
+                    <li><span>Belgaum</span><br><span>(Marketing Office)</span></li>
+                    <li><span>Karur</span><br><span>(Marketing Office)</span></li>
+                    <li><span>Salem</span><br><span>(Marketing Office)</span></li>
+                    <li><span>Tirupur</span><br><span>(Marketing Office)</span></li>
+                    <li><span>Panipat</span><br><span>(Marketing Office)</span></li>
+                </ul>
+            </div>
+            <div class="right_map_section">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3772.385699545884!2d72.8265326!3d19.0027185!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7ceed27fd8d23%3A0xb54ca8b9b177dc99!2sAYM%20Syntex%20Limited!5e0!3m2!1sen!2sin!4v1657008665201!5m2!1sen!2sin" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script>
+        var mapData;
+        $.ajax('map.json',   // request url
+        {
+            success: function (data, status, xhr) {// success callback function
+                mapData = data;
+                console.log(mapData);
+            }
+        });
+
+        $('.statelist li').on('click', function(){
+            var currstate = $(this).find('span:nth-child(1)').text();
+            console.log(currstate);
+            mapData.forEach(element => {
+                if(element['city'] === currstate){
+                    $('.right_map_section iframe').attr('src', element['map_url']);
+                }
+                else{
+
+                }
+            });
+        })
+        // mapData.map((record) => {
+        //             return(
+        //                 console.log(record['city'])
+        //             )
+        //         })
+    </script>
+</body>
+</html>
